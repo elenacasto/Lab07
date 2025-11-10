@@ -52,6 +52,7 @@ class View:
         self.mostra_artefatti = ft.ElevatedButton(text="Mostra artefatti",
                                                   on_click=self.controller.handler_btn_mostra_artefatti)
         self.lista_artefatti = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
+
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
 
