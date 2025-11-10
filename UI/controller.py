@@ -19,43 +19,40 @@ class Controller:
 
     # POPOLA DROPDOWN
     # funzione che riempie il dropdown con i dati presi dal model
-    def popola_dropdown(self):
+    def popola_musei(self):
         musei = self._model.get_musei()
-        if musei:
-            self._view.mostra_musei.options = [ft.dropdown.Option(m) for m in musei]
-        else:
-            self._view.show_alert("Museo non trovato!")
+        self._view.mostra_musei.options.clear()
+        self._view.mostra_musei.options.append(ft.dropdown.Option(key="", text=musei))
+        for museo in musei:
+            self._view.mostra_musei.options.append(ft.dropdown.Option(key=museo.id, text=museo.nome))
 
+        self._view.update()
+
+    def popola_epoche(self):
         epoche = self._model.get_epoche()
-        if epoche:
-            self._view.mostra_epoche.options = [ft.dropdown.Option(e) for e in epoche]
-        else:
-            self._view.show_alert("Epoca non trovata!")
+        self._view.mostra_epoche.options.clear()
+        self._view.mostra_epoche.options.append(ft.dropdown.Option(key="", text=epoche))
+        for epoca in epoche:
+            self._view.mostra_epoche.options.append(ft.dropdown.Option(key=epoca, text=epoca))
 
-        self._view.page.update()
+        self._view.update()
 
     # CALLBACKS DROPDOWN
     def on_museo_change(self, e):
         self.museo_selezionato = e.control.value
-        print(f"Museo selezionato: {self.museo_selezionato}")
-
-        self.handler_btn_mostra_artefatti()
 
     def on_epoca_change(self, e):
         self.epoca_selezionata = e.control.value
-        print(f"Epoca selezionata: {self.epoca_selezionata}")
-
-        self.handler_btn_mostra_artefatti()
 
     # AZIONE: MOSTRA ARTEFATTI
     def handler_btn_mostra_artefatti(self):
         print("Mostra artefatti")
-        museo = self._view.mostra_musei.value
+        museo = self.museo_selezionato
         if not museo:
             self._view.show_alert("Selezaiona prima un museo!")
             return
 
-        epoca = self._view.mostra_epoche.value
+        epoca = self.epoca_selezionata
         if not epoca:
             self._view.show_alert("Selezaiona prima un epoca!")
             return
@@ -64,3 +61,10 @@ class Controller:
         if not artefatti:
             self._view.show_alert(f"Nessun artefatto trovato per {museo}!")
             return
+        else:
+            for artefatto in artefatti:
+                self._view.mostra_artefatti.controls.append(
+                    ft.Text(f"{artefatto.id}: {artefatto.nome}, {artefatto.tipologia}, {artefatto.epoca}")
+                )
+
+        self._view.update()

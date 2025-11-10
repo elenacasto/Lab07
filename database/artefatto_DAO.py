@@ -28,17 +28,17 @@ class ArtefattoDAO:
             query += "AND epoca = ?"
             parametri.append(epoca)
 
-        conn = ConnessioneDB().get_connection()
-        if conn is None:
+        cnx = ConnessioneDB().get_connection()
+        if cnx is None:
             return None
 
         try:
-            cursor = conn.cursor(dictionary=True)
+            cursor = cnx.cursor(dictionary=True)
             cursor.execute(query, parametri)
 
             risultato = cursor.fetchall()
             cursor.close()
-            conn.close()
+            cnx.close()
 
             if not risultato:
                 return None
@@ -60,17 +60,17 @@ class ArtefattoDAO:
             ORDER BY epoca
         """
 
-        conn = ConnessioneDB().get_connection()
-        if conn is None:
+        cnx = ConnessioneDB().get_connection()
+        if cnx is None:
             return None
 
         try:
-            cursor = conn.cursor()
+            cursor = cnx.cursor()
             cursor.execute(query)
 
             risultato = cursor.fetchall()
             cursor.close()
-            conn.close()
+            cnx.close()
             if not risultato:
                 return None
 

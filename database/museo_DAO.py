@@ -23,17 +23,17 @@ class MuseoDAO:
             FROM museo
         """
 
-        conn = ConnessioneDB().get_connection()
-        if conn is None:
+        cnx = ConnessioneDB().get_connection()
+        if cnx is None:
             return None
 
         try:
-            cursor = conn.cursor()
+            cursor = cnx.cursor()
             cursor.execute(query)
 
             risultato = cursor.fetchall()
             cursor.close()
-            conn.close()
+            cnx.close()
 
             if not risultato:
                 return None

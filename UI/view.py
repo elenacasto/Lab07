@@ -26,7 +26,6 @@ class View:
 
     def set_controller(self, controller):
         self.controller = controller
-        self.controller.popola_dropdown()
 
     def update(self):
         self.page.update()
@@ -45,6 +44,9 @@ class View:
                                          options=[],
                                          width= 250,
                                          on_change=self.controller.on_epoca_change)
+
+        self.controller.popola_musei()
+        self.controller.popola_epoca()
 
         # Sezione 3: Artefatti
         self.mostra_artefatti = ft.ElevatedButton(text="Mostra artefatti",
