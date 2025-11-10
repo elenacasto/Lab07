@@ -26,6 +26,7 @@ class View:
 
     def set_controller(self, controller):
         self.controller = controller
+        self.controller.popola_dropdown()
 
     def update(self):
         self.page.update()
@@ -36,10 +37,19 @@ class View:
         self.txt_titolo = ft.Text(value="Musei di Torino", size=38, weight=ft.FontWeight.BOLD)
 
         # --- Sezione 2: Filtraggio ---
-        # TODO
+        self.mostra_musei = ft.Dropdown(label="Museo",
+                                        options=[],
+                                        width= 450,
+                                        on_change=self.controller.on_museo_change)
+        self.mostra_epoche = ft.Dropdown(label="Epoca",
+                                         options=[],
+                                         width= 250,
+                                         on_change=self.controller.on_epoca_change)
 
         # Sezione 3: Artefatti
-        # TODO
+        self.mostra_artefatti = ft.ElevatedButton(text="Mostra artefatti",
+                                                  width=200,
+                                                  on_click=self.controller.handler_btn_mostra_artefatti)
 
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
@@ -53,10 +63,15 @@ class View:
             ft.Divider(),
 
             # Sezione 2: Filtraggio
-            # TODO
+            ft.Row(controls=[self.mostra_musei, self.mostra_epoche],
+                   spacing=10,
+                   alignment=ft.MainAxisAlignment.CENTER),
+            ft.Divider(),
 
             # Sezione 3: Artefatti
-            # TODO
+            ft.Row(spacing=200, controls=[self.mostra_artefatti],
+                         alignment=ft.MainAxisAlignment.CENTER),
+            ft.Divider(),
         )
 
         self.page.scroll = "adaptive"
